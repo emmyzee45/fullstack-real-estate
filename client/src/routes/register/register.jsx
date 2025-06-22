@@ -29,7 +29,8 @@ function Register() {
 
       navigate("/login");
     } catch (err) {
-      setError(err.response.data.message);
+      console.log(err)
+      setError(err.response?.data?.message);
     } finally {
       setIsLoading(false);
     }

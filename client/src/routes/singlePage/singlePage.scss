@@ -60,13 +60,27 @@
                 height: 16px;
               }
             }
-            .price {
-              padding: 5px;
-              background-color: rgba(254, 205, 81, 0.438);
-              border-radius: 5px;
-              width: max-content;
-              font-size: 20px;
-              font-weight: 300;
+            .priceWrapper {
+              display: flex;
+              gap: 5px;
+
+              .price {
+                padding: 5px;
+                background-color: rgba(254, 205, 81, 0.438);
+                border-radius: 5px;
+                width: max-content;
+                font-size: 20px;
+                font-weight: 300;
+              }
+              .payButton {
+                padding: 3px 10px;
+                border-radius: 10px;
+                width: max-content;
+                font-size: 20px;
+                font-weight: 300;
+                background-color: rgba(254, 205, 81, 0.438);
+                cursor: pointer;
+              }
             }
           }
           .user {

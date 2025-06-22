@@ -27,6 +27,17 @@ function SinglePage() {
     }
   };
 
+  const handlePayment = async () => {
+    try {
+      const res = await apiRequest.post('/payment/paystack/initialize', 
+        {postId: post.id, email: currentUser.email, amount: post.price }
+      );
+      window.location.href = res.data.authorization_url;
+    }catch(err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="singlePage">
       <div className="details">
@@ -40,11 +51,15 @@ function SinglePage() {
                   <img src="/pin.png" alt="" />
                   <span>{post.address}</span>
                 </div>
+                <div className="priceWrapper">
                 <div className="price">$ {post.price}</div>
+                <div className="payButton" onClick={handlePayment}>Pay</div>
+                </div>
               </div>
               <div className="user">
                 <img src={post.user.avatar} alt="" />
                 <span>{post.user.username}</span>
+                <button>Pay</button>
               </div>
             </div>
             <div

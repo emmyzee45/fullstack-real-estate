@@ -9,6 +9,7 @@ import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
+import Success from "./routes/payment/Success";
 
 function App() {
   const router = createBrowserRouter([
@@ -39,11 +40,15 @@ function App() {
           path: "/register",
           element: <Register />,
         },
+        {
+          path: "/payment-success",
+          element: <Success />,
+        },
       ],
     },
     {
       path: "/",
-      element: <RequireAuth />,
+      element: <RequireAuth allowedRoles={["admin", "agent", "customer"]} />,
       children: [
         {
           path: "/profile",
@@ -58,6 +63,13 @@ function App() {
           path: "/add",
           element: <NewPostPage />,
         },
+      ],
+    },
+    {
+      path: "/admin",
+      element: <RequireAuth allowedRoles={["admin"]} />,
+      children: [
+        // add admin-only routes here
       ],
     },
   ]);

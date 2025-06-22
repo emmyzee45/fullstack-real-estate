@@ -15,8 +15,14 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
+  const isAdmin = currentUser?.role === "admin";
+  const isAgent = currentUser?.role === "agent";
+  const isCustomer = currentUser?.role === "customer";
+
   return (
-    <AuthContext.Provider value={{ currentUser,updateUser }}>
+    <AuthContext.Provider
+      value={{ currentUser, updateUser, isAdmin, isAgent, isCustomer }}
+    >
       {children}
     </AuthContext.Provider>
   );
