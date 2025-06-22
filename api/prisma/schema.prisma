@@ -31,12 +31,20 @@ model Post {
   userId     String      @db.ObjectId
   postDetail PostDetail?
   savedPosts SavedPost[]
+   payments   Payment[] 
 }
 
 enum Type {
   buy
   rent
 }
+
+enum Role {
+  admin
+  agent
+  customer
+}
+
 
 enum Property {
   apartment
@@ -77,11 +85,14 @@ model User {
   password   String
   avatar     String?
   createdAt  DateTime    @default(now())
+  role       Role        @default(customer)
   posts      Post[]
   savedPosts SavedPost[]
   chats      Chat[]      @relation(fields: [chatIDs], references: [id])
   chatIDs    String[]    @db.ObjectId
+   payments   Payment[] 
 }
+
 
 model Chat {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
@@ -100,4 +111,19 @@ model Message {
   chat      Chat     @relation(fields: [chatId], references: [id])
   chatId    String   @db.ObjectId
   createdAt DateTime @default(now())
+}
+
+model Payment {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String   @db.ObjectId
+  post           Post?    @relation(fields: [postId], references: [id])
+  postId         String?  @db.ObjectId
+  reference      String   @unique
+  amount         Int      // Stored in Kobo
+  status         String   // success | failed | pending
+  channel        String?  // e.g., card, bank, transfer
+  currency       String   @default("NGN")
+  paidAt         DateTime?
+  createdAt      DateTime @default(now())
 }
